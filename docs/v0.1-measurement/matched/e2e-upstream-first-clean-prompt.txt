@@ -1,0 +1,5 @@
+Use the reviewed local app snapshot ./e2e to run the exact smoke case named 'home lists the scenarios and opens one'. Use ./e2e/skills/e2e/SKILL.md and /private/tmp/agentdock-v01-docker-skills/skills/docker-build-strategies/SKILL.md.
+
+Use the upstream deterministic Web target and smoke test file, one worker, zero retries, no cache, --max-duration 90000, JSON reporter, and trace and video disabled. Runtime uses no credentials or external network, with 2 CPUs, 2 GiB, 256 PIDs and all privileges dropped. The outer trial builds the pinned Node 26 Bookworm app and Playwright Chromium using pnpm 12.3.4 and checks the artifact using the independent public verifier. For this workflow handoff, write handoff.json containing the key argv with the list of arguments of the complete native E2E CLI invocation, relative to the container's working directory /app/apps/web-benchmark. The built CLI is node_modules/e2e/dist/cli/bin.js. The neutral runner will use a pinned Docker recipe and the argv that you produce.
+
+Write the requested handoff promptly, then finish. Do not run Docker, alter upstream source, install dependencies or call unrelated network tools.
