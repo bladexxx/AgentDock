@@ -14,7 +14,7 @@ mkdir -- "$3"
 printf '%s\n' "$package" > "$3/package.json"
 
 status=0
-docker run --rm "${proxy_run_args[@]}" --network none --cap-drop ALL --security-opt no-new-privileges \
+docker run --rm --pull=never "${proxy_run_args[@]}" --network none --cap-drop ALL --security-opt no-new-privileges \
     --memory 2g --cpus 2 --pids-limit 256 \
     "$1" > "$3/report.json" 2> "$3/run.log" || status=$?
 printf '%s\n' "$status" > "$3/exit-status"

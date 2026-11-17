@@ -14,7 +14,7 @@ mkdir -- "$3"
 printf '%s\n' "$package" > "$3/package.json"
 
 status=0
-docker run --rm "${proxy_run_args[@]}" --platform linux/amd64 --network none --cap-drop ALL \
+docker run --rm --pull=never "${proxy_run_args[@]}" --platform linux/amd64 --network none --cap-drop ALL \
     --security-opt no-new-privileges --read-only --tmpfs /tmp:rw,size=64m \
     --memory 2g --cpus 2 --pids-limit 256 --entrypoint /bin/sh \
     "$1" -ec 'cli-anything-sand3d --json bracket --output /tmp/bracket.glb >&2

@@ -7,8 +7,9 @@ See the [release contract](docs/v0.1-build-spec.md) and [local tickets](.scratch
 
 The E2E fixture uses the native CLI and upstream Skill from a pinned E2E Git checkout.
 It needs Docker and Python 3.11 or newer. The container recipe pins its Node 26 Debian
-base image by digest. The build downloads locked dependencies and Chromium. The test runs against the
-benchmark app on loopback with external networking disabled.
+base image by digest. The build fetches locked dependencies and Chromium before
+building the application offline. The test runs against the benchmark app on
+loopback with external networking disabled.
 
 ```sh
 image_id=$(bash fixtures/e2e/build.sh /path/to/e2e e2e-build-receipt.json)
