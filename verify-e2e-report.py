@@ -6,6 +6,9 @@ import json
 from pathlib import Path
 
 
+FIXTURE_VERSION = "e2e-web-smoke-1"
+
+
 def check_report(report: object) -> None:
     if not isinstance(report, dict) or report.get("schemaVersion") != "report-1":
         raise ValueError("Expected an E2E report-1 document")
@@ -50,9 +53,9 @@ def main() -> int:
             raise ValueError("Report exceeds the fixture's 4 MiB limit")
         check_report(json.loads(contents))
     except (OSError, ValueError, RecursionError) as error:
-        print(json.dumps({"result": "failed", "error": str(error)}))
+        print(json.dumps({"fixtureVersion": FIXTURE_VERSION, "result": "failed", "error": str(error)}))
         return 1
-    print(json.dumps({"result": "passed", "reportSha256": hashlib.sha256(contents).hexdigest()}))
+    print(json.dumps({"fixtureVersion": FIXTURE_VERSION, "result": "passed", "reportSha256": hashlib.sha256(contents).hexdigest()}))
     return 0
 
 
