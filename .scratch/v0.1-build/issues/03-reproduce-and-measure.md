@@ -4,8 +4,10 @@
 
 **Blocked by:** 01 and 02.
 
-**Status:** ready-for-agent
+**Status:** partial evidence recorded
 
-- [ ] Replay both launch fixtures from clean inputs and retain the verification reports.
+- [x] Replay both launch fixtures from clean inputs and retain the verification reports.
 - [ ] Record elapsed time, interventions and verified artifact results for the baseline and AgentDock using the same inputs and budgets.
-- [ ] Measure first generation separately from recipe replay.
+- [x] Measure first generation separately from recipe replay.
+
+See the [measurement report](../../../docs/v0.1-measurement.md) for the recorded trials and remaining matched comparison.
