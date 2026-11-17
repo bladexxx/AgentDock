@@ -16,4 +16,6 @@ jobs:
         with:
           python-version: '3.11'
       - run: bash -n fixtures/e2e/build.sh && bash -n fixtures/e2e/run.sh
+      - run: bash -n fixtures/sand3d/build.sh && bash -n fixtures/sand3d/run.sh
+      - run: cmp skills/cli-anything-sand3d/SKILL.md fixtures/sand3d/agent-harness/cli_anything/sand3d/skills/SKILL.md
       - run: python3 -B -m unittest discover -s tests

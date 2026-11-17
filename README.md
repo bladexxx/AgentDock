@@ -16,4 +16,14 @@ bash fixtures/e2e/run.sh "$image_id" /path/to/new-evidence-directory
 python3 -B -m unittest discover -s tests
 ```
 
+The Sand3D fixture uses a CLI and matching Skill generated with CLI-Anything from
+the pinned Sand3D Python API. Its Linux amd64 image includes Blender's headless
+Python runtime. The verifier checks the exported plate geometry with container
+networking disabled.
+
+```sh
+image_id=$(bash fixtures/sand3d/build.sh /path/to/sand3d)
+bash fixtures/sand3d/run.sh "$image_id" /path/to/new-sand3d-evidence-directory
+```
+
 Use the [Builder Skill](skills/agentdock-builder/SKILL.md) for the same workflow in Codex.
