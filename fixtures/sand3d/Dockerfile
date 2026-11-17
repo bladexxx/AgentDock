@@ -1,10 +1,20 @@
 # syntax=docker/dockerfile:1
 ARG PYTHON_IMAGE=python:3.11-slim-bookworm@sha256:e8c69d86735f6df3efa06b324694fe51f0422785f83a3bd463052636c2421944
-FROM ${PYTHON_IMAGE}
+FROM ${PYTHON_IMAGE} AS system-dependencies
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libgl1 libx11-6 libxi6 libxkbcommon0 libxrender1 \
+# Use the same signed snapshot date listed in the pinned base image.
+# Ignore expiry for this historical snapshot while retaining signature checks.
+RUN snapshot=20261104T212339Z \
+    && sed -i \
+        -e "s|^URIs: http://deb.debian.org/debian-security$|URIs: https://snapshot.debian.org/archive/debian-security/$snapshot|" \
+        -e "s|^URIs: http://deb.debian.org/debian$|URIs: https://snapshot.debian.org/archive/debian/$snapshot|" \
+        /etc/apt/sources.list.d/debian.sources \
+    && apt-get -o Acquire::Check-Valid-Until=false -o APT::Update::Error-Mode=any update \
+    && apt-get install -y --no-install-recommends \
+        libgl1 libx11-6 libxi6 libxkbcommon0 libxrender1 libsm6 libice6 \
     && rm -rf /var/lib/apt/lists/*
+
+FROM system-dependencies AS dependencies
 RUN pip install --timeout 120 --no-cache-dir \
     'certifi==2026.10.23' 'charset-normalizer==3.5.2' 'click==8.3.3' 'cython==3.3.1' \
     'idna==3.20' 'numpy==1.26.4' 'requests==2.34.2' 'setuptools==82.0.1' \
@@ -20,11 +30,7 @@ RUN --mount=type=bind,source=wheel,target=/wheel \
     fi \
     && pip install --timeout 120 --no-cache-dir --no-deps "$input"
 
-# The bpy wheel links against these X11 libraries even in headless mode.
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libsm6 libice6 \
-    && rm -rf /var/lib/apt/lists/*
-
+FROM dependencies
 WORKDIR /app
 COPY source/ /app/source/
 COPY agent-harness/ /app/agent-harness/
