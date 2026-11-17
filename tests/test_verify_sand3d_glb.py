@@ -10,23 +10,41 @@ import tempfile
 import unittest
 
 
-VERIFIER = Path(__file__).resolve().parents[1] / "verify-sand3d-glb.py"
+ROOT = Path(__file__).resolve().parents[1]
+VERIFIER = ROOT / "verify-sand3d-glb.py"
+MEASUREMENT = ROOT / "docs/v0.1-measurement"
 
 
-def bracket_glb(width=0.080, node_scale=None, holes=True):
+def bracket_glb(width=0.080, node_scale=None, holes=True, closed=True, slot=False):
     scale = node_scale or 1
     x_values = [-width / 2, -0.028, -0.022, 0.022, 0.028, width / 2]
     z_values = [-0.020, -0.003, 0.003, 0.020]
     points, faces = [], []
+    cells = {
+        (x, z) for x in range(len(x_values) - 1) for z in range(len(z_values) - 1)
+        if not (holes and x in (1, 3) and (z == 1 or slot and z == 0))
+    }
+
+    def quad(corners):
+        i = len(points)
+        points.extend(corners)
+        faces.extend([i, i + 1, i + 2, i, i + 2, i + 3])
+
     for x_index, (left, right) in enumerate(zip(x_values, x_values[1:])):
         for z_index, (near, far) in enumerate(zip(z_values, z_values[1:])):
-            if holes and x_index in (1, 3) and z_index == 1:
+            if (x_index, z_index) not in cells:
                 continue
-            for y in (0, 0.006):
-                i = len(points)
-                corners = [(left, y, near), (right, y, near), (right, y, far), (left, y, far)]
-                points.extend(corners)
-                faces.extend([i, i + 1, i + 2, i, i + 2, i + 3])
+            bottom = [(left, 0, near), (right, 0, near), (right, 0, far), (left, 0, far)]
+            top = [(x, 0.006, z) for x, _, z in bottom]
+            quad(bottom)
+            quad(top[::-1])
+            if closed:
+                neighbours = [(x_index, z_index - 1), (x_index + 1, z_index),
+                              (x_index, z_index + 1), (x_index - 1, z_index)]
+                for edge, neighbour in enumerate(neighbours):
+                    if neighbour not in cells:
+                        following = (edge + 1) % len(bottom)
+                        quad([bottom[following], bottom[edge], top[edge], top[following]])
     vertices = b"".join(struct.pack("<fff", *(value / scale for value in point)) for point in points)
     triangles = struct.pack(f"<{len(faces)}H", *faces)
     binary = vertices + triangles
@@ -65,15 +83,29 @@ class Sand3DGlbTests(unittest.TestCase):
             return subprocess.run([sys.executable, str(VERIFIER), str(path)],
                                   capture_output=True, text=True)
 
-    def test_glb_with_expected_plate_geometry_passes(self):
-        contents = bracket_glb()
+    def test_blender_export_passes(self):
+        contents = (MEASUREMENT / "bracket.glb").read_bytes()
         result = self.verify(contents)
         self.assertEqual(result.returncode, 0, result.stderr)
         evidence = json.loads(result.stdout)
         self.assertEqual(evidence["result"], "passed")
         self.assertEqual(evidence["artifactSha256"], hashlib.sha256(contents).hexdigest())
-        self.assertEqual(evidence["plate"]["triangles"], 52)
+        self.assertEqual(evidence["plate"]["triangles"], 1220)
 
+    def test_open_faces_with_correct_dimensions_and_clear_hole_rays_fail(self):
+        result = self.verify(bracket_glb(closed=False))
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertIn("closed surface", json.loads(result.stdout)["error"])
+
+    def test_edge_slots_with_correct_dimensions_and_clear_hole_rays_fail(self):
+        result = self.verify(bracket_glb(slot=True))
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertIn("enclosed through holes", json.loads(result.stdout)["error"])
+
+    def test_blender_export_of_wrong_width_fails(self):
+        result = self.verify((MEASUREMENT / "sand3d-negative.glb").read_bytes())
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertIn("Wrong plate dimensions", json.loads(result.stdout)["error"])
 
     def test_bracket_node_may_scale_mesh_millimetres_to_metres(self):
         result = self.verify(bracket_glb(node_scale=0.001))

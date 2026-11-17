@@ -1,6 +1,7 @@
 """Check the Sand3D bracket's GLB container and plate geometry."""
 
 import argparse
+from collections import defaultdict
 import hashlib
 import json
 import math
@@ -8,7 +9,7 @@ from pathlib import Path
 import struct
 
 
-FIXTURE_VERSION = "sand3d-bracket-1"
+FIXTURE_VERSION = "sand3d-bracket-2"
 MAX_ARTIFACT_BYTES = 4 * 1024 * 1024
 # The upstream example is 80 × 40 × 6 mm. Blender exports glTF with Y up.
 EXPECTED_EXTENT_METRES = (0.080, 0.006, 0.040)
@@ -103,12 +104,111 @@ def check_plate(doc, binary):
         raise ValueError("Expected plate material between the holes")
     if any(covers_xz(triangle, (x, 0)) for triangle in triangles for x in HOLE_CENTERS_X_METRES):
         raise ValueError("Expected two through holes at 50 mm pitch")
+    check_plate_surface(triangles)
     return {
         "name": "plate",
         "triangles": len(triangles),
         "extentMetres": extents,
         "holeCentersXMetres": HOLE_CENTERS_X_METRES,
     }
+
+
+def connected_vertices(neighbours, start):
+    seen = {start}
+    pending = [start]
+    while pending:
+        for vertex in neighbours[pending.pop()]:
+            if vertex not in seen:
+                seen.add(vertex)
+                pending.append(vertex)
+    return seen
+
+
+def check_plate_surface(triangles):
+    # glTF can split vertices at shading seams. Weld coincident positions first.
+    ids = {}
+    edges = defaultdict(list)
+    links = defaultdict(lambda: defaultdict(set))
+    for triangle in triangles:
+        a, b, c = [ids.setdefault(point, len(ids)) for point in triangle]
+        p, q, r = triangle
+        ux, uy, uz = (right - left for left, right in zip(p, q))
+        vx, vy, vz = (right - left for left, right in zip(p, r))
+        if not any((uy * vz - uz * vy, uz * vx - ux * vz, ux * vy - uy * vx)):
+            raise ValueError("Degenerate plate triangle")
+        for vertex, start, end in ((a, b, c), (b, c, a), (c, a, b)):
+            edges[tuple(sorted((start, end)))].append(start < end)
+            links[vertex][start].add(end)
+            links[vertex][end].add(start)
+
+    if any(sorted(directions) != [False, True] for directions in edges.values()):
+        raise ValueError("Expected an oriented closed surface for the plate")
+    for link in links.values():
+        if len(connected_vertices(link, next(iter(link)))) != len(link):
+            raise ValueError("Expected one surface fan at each plate vertex")
+    if len(connected_vertices(links, 0)) != len(ids):
+        raise ValueError("Expected a connected closed surface for the plate")
+
+    # A connected orientable closed surface with two tunnels has Euler characteristic -2.
+    if len(ids) - len(edges) + len(triangles) != -2:
+        raise ValueError("Expected two enclosed through holes in the plate")
+    check_section(triangles, ids)
+
+
+def check_section(triangles, ids):
+    """Verify both clear thickness rays lie inside distinct bounded cutouts."""
+    heights = {point[1] for point in ids}
+    height = (min(heights) + max(heights)) / 2
+    while height in heights:
+        height = math.nextafter(height, math.inf)
+
+    points = {}
+    neighbours = defaultdict(set)
+    for a, b, c in triangles:
+        crossings = []
+        for start, end in ((a, b), (b, c), (c, a)):
+            if (start[1] < height) == (end[1] < height):
+                continue
+            edge = tuple(sorted((ids[start], ids[end])))
+            if edge not in points:
+                factor = (height - start[1]) / (end[1] - start[1])
+                points[edge] = (start[0] + factor * (end[0] - start[0]),
+                                start[2] + factor * (end[2] - start[2]))
+            crossings.append(edge)
+        if crossings:
+            left, right = crossings
+            neighbours[left].add(right)
+            neighbours[right].add(left)
+
+    # Closed oriented mesh edges yield loops in a section that avoids mesh vertices.
+    remaining = set(points)
+    contours = []
+    while remaining:
+        first = next(iter(remaining))
+        contour = connected_vertices(neighbours, first)
+        remaining.difference_update(contour)
+        contours.append(contour)
+
+    def containing(x):
+        result = set()
+        for index, contour in enumerate(contours):
+            crossings = 0
+            for start in contour:
+                x1, z1 = points[start]
+                for end in neighbours[start]:
+                    x2, z2 = points[end]
+                    if start < end and (z1 > 0) != (z2 > 0):
+                        intersection = x1 - z1 * (x2 - x1) / (z2 - z1)
+                        crossings += intersection > x
+            if crossings % 2:
+                result.add(index)
+        return result
+
+    outer = containing(0)
+    hole_contours = [containing(x) for x in HOLE_CENTERS_X_METRES]
+    if (len(contours) != 3 or len(outer) != 1 or hole_contours[0] == hole_contours[1]
+            or any(len(hole) != 2 or not outer <= hole for hole in hole_contours)):
+        raise ValueError("Expected two distinct enclosed through holes in the plate")
 
 
 def covers_xz(triangle, point):
