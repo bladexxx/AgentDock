@@ -1,0 +1,387 @@
+{
+  "e2e-upstream-first": {
+    "startedUnix": 1794927019.8468559,
+    "wallSeconds": 180.022,
+    "exit": 124,
+    "capSeconds": 180,
+    "sourceRevision": "783a8c94c67cfe950e62f43ff44e29177345415a",
+    "command": [
+      "codex",
+      "exec",
+      "--ephemeral",
+      "--ignore-user-config",
+      "--skip-git-repo-check",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "-m",
+      "gpt-6-sol",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-C",
+      "/private/tmp/agentdock-ticket03/e2e-upstream-first",
+      "-"
+    ],
+    "sourceArchiveSha256": "abcfa1df5768dfde268e72ed3e0416ea0d88ed56147bd0d5d9159e0c6d830b4f",
+    "promptSha256": "267629d501714fbccd663d996a4a00d794ff7c663190f6d6691f786c8cd5f37d",
+    "eventStreamSha256": "bac45fa96b8b88e7a40ec477524e100f1c9f8950d8ea61655cb0dcdfe46aa8f4",
+    "eventCount": 51,
+    "usage": null,
+    "artifactVerdictInSession": null,
+    "recipeSha256": "907f0483705d560280e08e54e7860e8a8ed0f3badec9accdab985a369c811811"
+  },
+  "e2e-agentdock-first": {
+    "startedUnix": 1794927019.8486269,
+    "wallSeconds": 122.075,
+    "exit": 0,
+    "capSeconds": 180,
+    "sourceRevision": "783a8c94c67cfe950e62f43ff44e29177345415a",
+    "command": [
+      "codex",
+      "exec",
+      "--ephemeral",
+      "--ignore-user-config",
+      "--skip-git-repo-check",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "-m",
+      "gpt-6-sol",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-C",
+      "/private/tmp/agentdock-ticket03/e2e-agentdock-first",
+      "-"
+    ],
+    "sourceArchiveSha256": "abcfa1df5768dfde268e72ed3e0416ea0d88ed56147bd0d5d9159e0c6d830b4f",
+    "promptSha256": "dba5400797903a0d92584ed1b6dc3e65c49b87177cd6836fd54c056d726c5c58",
+    "eventStreamSha256": "713f1231bb6968b7811d62960d304daf54b8ff31bba11e1a3c8863dcc4daf0bb",
+    "eventCount": 37,
+    "usage": {
+      "input_tokens": 330938,
+      "cached_input_tokens": 310528,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 3803,
+      "reasoning_output_tokens": 954
+    },
+    "artifactVerdictInSession": null,
+    "recipeSha256": "bd0f4392ed12ba3bad9cdaa0e51d7645d93ae127d9931d1409da3c3e55353a44"
+  },
+  "sand3d-upstream-first": {
+    "startedUnix": 1794927009.9404511,
+    "wallSeconds": 180.028,
+    "exit": 124,
+    "capSeconds": 180,
+    "sourceRevision": "5cdb54e4aef76377ad1a8bbc11e257eee8fc2341",
+    "command": [
+      "codex",
+      "exec",
+      "--ephemeral",
+      "--ignore-user-config",
+      "--skip-git-repo-check",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "-m",
+      "gpt-6-sol",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-C",
+      "/private/tmp/agentdock-ticket03/sand3d-upstream-first",
+      "-"
+    ],
+    "sourceArchiveSha256": "1677bb9a990ad915bf8a74ec42b66eebb7d887f54c711965342241e3a55028b0",
+    "promptSha256": "5c8081359e9ebd0a6e5c04bd70d56a1ee258e0cfe81ed8a0fa7a11728eb21bf8",
+    "eventStreamSha256": "045db0388f0ef3125c8fdc52dd69b3c7f9a8466b32c8d322b6b6237817eb7473",
+    "eventCount": 50,
+    "usage": null,
+    "artifactVerdictInSession": null,
+    "generatedHarnessTarSha256": "10da5319704af04c268c3a3ab0e11207d41ac5b0a48bb5585183cf143c6704e1"
+  },
+  "sand3d-agentdock-first": {
+    "startedUnix": 1794927019.395552,
+    "wallSeconds": 180.022,
+    "exit": 124,
+    "capSeconds": 180,
+    "sourceRevision": "5cdb54e4aef76377ad1a8bbc11e257eee8fc2341",
+    "command": [
+      "codex",
+      "exec",
+      "--ephemeral",
+      "--ignore-user-config",
+      "--skip-git-repo-check",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "-m",
+      "gpt-6-sol",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-C",
+      "/private/tmp/agentdock-ticket03/sand3d-agentdock-first",
+      "-"
+    ],
+    "sourceArchiveSha256": "1677bb9a990ad915bf8a74ec42b66eebb7d887f54c711965342241e3a55028b0",
+    "promptSha256": "f30137791f1e080da90ca9a0091603f727aea2df8fd271c99502cf871711d959",
+    "eventStreamSha256": "ce1c38c97e933e9b5aa811ab1a3406512fd35a93016251a6c58a83be301a8f9e",
+    "eventCount": 64,
+    "usage": null,
+    "artifactVerdictInSession": null,
+    "generatedHarnessTarSha256": "9f6128f026f62990c5966b2040d3fba8ca743f2f43c8a9bcfa13366f76cbc3aa"
+  },
+  "e2e-upstream-replay": {
+    "build": {
+      "elapsedSeconds": 7.59,
+      "exit": 0
+    },
+    "containerExit": 0,
+    "imageId": "sha256:56f611bb37edf4c5af6ee2bc2ffcee0f4230f51e2e78f09c9f08e8685415d912",
+    "verdict": {
+      "result": "passed",
+      "reportSha256": "c2e11b437ff5c52c1b12e2a73c1de563186407ed106d242236fc8769f8234659"
+    },
+    "buildLogSha256": "97c81391edd55943de2a7dc36516b1ef5bf6106042878db6cc498a3318076d18",
+    "run": {
+      "elapsedSeconds": 12.94,
+      "exit": 0
+    },
+    "verify": {
+      "elapsedSeconds": 0.05,
+      "exit": 0
+    },
+    "dockerfileSha256": "bf141564b2ab03d7ee578789666b92893bd7f6c21f17da465e944c04f12ce06e",
+    "verifierSha256": "94b9110c8cfe2d05a6b3b1f5d10855e6eaeb778fb0909ecf8430f2505b1cecaf",
+    "platform": "linux/arm64",
+    "sourceArchiveSha256": "abcfa1df5768dfde268e72ed3e0416ea0d88ed56147bd0d5d9159e0c6d830b4f"
+  },
+  "e2e-agentdock-replay": {
+    "build": {
+      "elapsedSeconds": 1.06,
+      "exit": 0
+    },
+    "containerExit": 0,
+    "imageId": "sha256:f10978722fa6c20d122006510d688f499bab1a086d231de108ff254d03657b89",
+    "verdict": {
+      "result": "passed",
+      "reportSha256": "9d53cb8bc18d3f1c5d539d58d82dfeb47b07443ea713ec7a47fe2da7193da1d7"
+    },
+    "buildLogSha256": "8498a8d4aedfe2bc885baa328889b813e8d01dda0f81d6bec4dd15d964d08223",
+    "runAndVerify": {
+      "elapsedSeconds": 11.48,
+      "exit": 0
+    },
+    "package": {
+      "source": "https://github.com/e2e-inc/e2e",
+      "sourceRevision": "783a8c94c67cfe950e62f43ff44e29177345415a",
+      "imageId": "sha256:f10978722fa6c20d122006510d688f499bab1a086d231de108ff254d03657b89",
+      "baseImage": "node:26-bookworm-slim@sha256:5df79989ed685e09f0a98019db4cebfb22fb9df1a53c0161664a011f7ff6b0f1",
+      "platform": "linux/arm64",
+      "skill": {
+        "path": "skills/e2e",
+        "gitTree": "7fe0b8f56fdcd5cd3da7258d67a1e4cfe5557a06"
+      },
+      "verifierSha256": "94b9110c8cfe2d05a6b3b1f5d10855e6eaeb778fb0909ecf8430f2505b1cecaf"
+    },
+    "sourceArchiveSha256": "abcfa1df5768dfde268e72ed3e0416ea0d88ed56147bd0d5d9159e0c6d830b4f"
+  },
+  "sand3d-upstream-replay": {
+    "build": {
+      "elapsedSeconds": 6.68,
+      "exit": 0
+    },
+    "containerExit": 0,
+    "imageId": "sha256:b08313d8d6458eb39721755818ae30fe3f62728b9fd3f78453d64be7f597c013",
+    "verdict": {
+      "fixtureVersion": "sand3d-bracket-1",
+      "plate": {
+        "name": "plate",
+        "triangles": 1220,
+        "extentMetres": [
+          0.0800000037997961,
+          0.006000000284984708,
+          0.04000000189989805
+        ],
+        "holeCentersXMetres": [
+          -0.025,
+          0.025
+        ]
+      },
+      "result": "passed",
+      "artifactSha256": "192726518481ddcfcc9f13c95e783ed3dfbfcfe7b9a686788c7a5367508c85f7"
+    },
+    "buildLogSha256": "a587896aa66a061968a2c1a1f8353de0edb87c88057e1bac37cce1849dbbdebc",
+    "run": {
+      "elapsedSeconds": 1.73,
+      "exit": 0
+    },
+    "verify": {
+      "elapsedSeconds": 0.09,
+      "exit": 0
+    },
+    "dockerfileSha256": "1ebc519b895932c16d033677558f3ac8865c544c6a13e7e728a1571e99702524",
+    "verifierSha256": "022d940ab136e22141f7de7feb3a4b54cc274e44bd773115eb7d46a324d52f7d",
+    "platform": "linux/amd64",
+    "sourceArchiveSha256": "1677bb9a990ad915bf8a74ec42b66eebb7d887f54c711965342241e3a55028b0"
+  },
+  "sand3d-agentdock-replay": {
+    "build": {
+      "elapsedSeconds": 5.88,
+      "exit": 0
+    },
+    "containerExit": 0,
+    "imageId": "sha256:55cc6632403dea567c9d9a60e408621d18a4a5aee70303bf1c2939c9443ca85c",
+    "verdict": {
+      "fixtureVersion": "sand3d-bracket-1",
+      "plate": {
+        "name": "plate",
+        "triangles": 1220,
+        "extentMetres": [
+          0.0800000037997961,
+          0.006000000284984708,
+          0.04000000189989805
+        ],
+        "holeCentersXMetres": [
+          -0.025,
+          0.025
+        ]
+      },
+      "result": "passed",
+      "artifactSha256": "192726518481ddcfcc9f13c95e783ed3dfbfcfe7b9a686788c7a5367508c85f7"
+    },
+    "buildLogSha256": "a20e0513561da13f2a73abd63c33afd917de048621d641cf9f7abd6d4dd9fe7e",
+    "runAndVerify": {
+      "elapsedSeconds": 1.64,
+      "exit": 0
+    },
+    "package": {
+      "source": "https://github.com/Sandflow-ai/sand3d",
+      "sourceRevision": "5cdb54e4aef76377ad1a8bbc11e257eee8fc2341",
+      "imageId": "sha256:55cc6632403dea567c9d9a60e408621d18a4a5aee70303bf1c2939c9443ca85c",
+      "baseImage": "python:3.11-slim-bookworm@sha256:e8c69d86735f6df3efa06b324694fe51f0422785f83a3bd463052636c2421944",
+      "platform": "linux/amd64",
+      "cli": "cli-anything-sand3d",
+      "cliVersion": "0.1.0",
+      "cliAnythingRevision": "34f519533bc175d2fe287ab8316b0dd99bb9cc43",
+      "skill": {
+        "path": "skills/cli-anything-sand3d/SKILL.md",
+        "sha256": "30167290ea9d738f0271bf2c704c80d06865fd3531c43c8e66a0403b278dfb12"
+      },
+      "verifierSha256": "022d940ab136e22141f7de7feb3a4b54cc274e44bd773115eb7d46a324d52f7d"
+    },
+    "sourceArchiveSha256": "1677bb9a990ad915bf8a74ec42b66eebb7d887f54c711965342241e3a55028b0"
+  },
+  "sand3d-upstream-generated-verification": {
+    "build": {
+      "elapsedSeconds": 7.28,
+      "exit": 0
+    },
+    "containerExit": 0,
+    "imageId": "sha256:ac00efd2eaa4764d7fcc97cf2cdaf293a9524308223d463ab6780eba50d66e18",
+    "verdict": {
+      "fixtureVersion": "sand3d-bracket-1",
+      "plate": {
+        "name": "plate",
+        "triangles": 1220,
+        "extentMetres": [
+          0.0800000037997961,
+          0.006000000284984708,
+          0.04000000189989805
+        ],
+        "holeCentersXMetres": [
+          -0.025,
+          0.025
+        ]
+      },
+      "result": "passed",
+      "artifactSha256": "192726518481ddcfcc9f13c95e783ed3dfbfcfe7b9a686788c7a5367508c85f7"
+    },
+    "buildLogSha256": "d7260cc3e5a19e9b9503bb4d2e27ea1dec4d11528a6a5f1d537e5989949b3480",
+    "runAndVerify": {
+      "elapsedSeconds": 1.66,
+      "exit": 0
+    },
+    "package": {
+      "source": "https://github.com/Sandflow-ai/sand3d",
+      "sourceRevision": "5cdb54e4aef76377ad1a8bbc11e257eee8fc2341",
+      "imageId": "sha256:ac00efd2eaa4764d7fcc97cf2cdaf293a9524308223d463ab6780eba50d66e18",
+      "baseImage": "python:3.11-slim-bookworm@sha256:e8c69d86735f6df3efa06b324694fe51f0422785f83a3bd463052636c2421944",
+      "platform": "linux/amd64",
+      "cli": "cli-anything-sand3d",
+      "cliVersion": "0.1.0",
+      "cliAnythingRevision": "34f519533bc175d2fe287ab8316b0dd99bb9cc43",
+      "skill": {
+        "path": "skills/cli-anything-sand3d/SKILL.md",
+        "sha256": "9ec7d1ebd4ba2d19d4136ba10f63c5fd8df487e0d873da45542cfdce9a8b671b"
+      },
+      "verifierSha256": "022d940ab136e22141f7de7feb3a4b54cc274e44bd773115eb7d46a324d52f7d"
+    },
+    "sourceArchiveSha256": "1677bb9a990ad915bf8a74ec42b66eebb7d887f54c711965342241e3a55028b0"
+  },
+  "sand3d-agentdock-generated-verification": {
+    "build": {
+      "elapsedSeconds": 5.55,
+      "exit": 0
+    },
+    "containerExit": 0,
+    "imageId": "sha256:26fe73eb4b7a30066773c62a45125bf791d6bef39ec523060ef73f4b8ec9064e",
+    "verdict": {
+      "fixtureVersion": "sand3d-bracket-1",
+      "plate": {
+        "name": "plate",
+        "triangles": 1220,
+        "extentMetres": [
+          0.0800000037997961,
+          0.006000000284984708,
+          0.04000000189989805
+        ],
+        "holeCentersXMetres": [
+          -0.025,
+          0.025
+        ]
+      },
+      "result": "passed",
+      "artifactSha256": "192726518481ddcfcc9f13c95e783ed3dfbfcfe7b9a686788c7a5367508c85f7"
+    },
+    "buildLogSha256": "3787f76d2e9602033fa84ccb61b0104c63b97d4fac9594f405e12173dbd8595f",
+    "runAndVerify": {
+      "elapsedSeconds": 1.75,
+      "exit": 0
+    },
+    "package": {
+      "source": "https://github.com/Sandflow-ai/sand3d",
+      "sourceRevision": "5cdb54e4aef76377ad1a8bbc11e257eee8fc2341",
+      "imageId": "sha256:26fe73eb4b7a30066773c62a45125bf791d6bef39ec523060ef73f4b8ec9064e",
+      "baseImage": "python:3.11-slim-bookworm@sha256:e8c69d86735f6df3efa06b324694fe51f0422785f83a3bd463052636c2421944",
+      "platform": "linux/amd64",
+      "cli": "cli-anything-sand3d",
+      "cliVersion": "0.1.0",
+      "cliAnythingRevision": "34f519533bc175d2fe287ab8316b0dd99bb9cc43",
+      "skill": {
+        "path": "skills/cli-anything-sand3d/SKILL.md",
+        "sha256": "293d032e6bf81b67f457c5e0fa02b9f6ce675da963750813b5640f6cf43d7555"
+      },
+      "verifierSha256": "022d940ab136e22141f7de7feb3a4b54cc274e44bd773115eb7d46a324d52f7d"
+    },
+    "sourceArchiveSha256": "1677bb9a990ad915bf8a74ec42b66eebb7d887f54c711965342241e3a55028b0"
+  },
+  "e2e-negative": {
+    "containerExit": 0,
+    "artifactSha256": "9d53cb8bc18d3f1c5d539d58d82dfeb47b07443ea713ec7a47fe2da7193da1d7",
+    "verifierExit": 1,
+    "verdict": {
+      "result": "failed",
+      "error": "The expected web smoke test did not pass"
+    },
+    "modifiedVerifierSha256": "8771decc6a6a90e2d35c95375650e9d8305c5f5f433c42de520da2fe32afdbff"
+  },
+  "sand3d-negative": {
+    "containerExit": 0,
+    "artifactSha256": "0532bfe40ef6fca51ed08aa08edce6bd6f37ca7d3531b1bd6ba34d73bca78eaf",
+    "verifierExit": 1,
+    "verdict": {
+      "fixtureVersion": "sand3d-bracket-1",
+      "result": "failed",
+      "error": "Wrong plate dimensions in metres (X, Y, Z): [0.07000000332482159, 0.006000000284984708, 0.04000000189989805]"
+    }
+  }
+}
