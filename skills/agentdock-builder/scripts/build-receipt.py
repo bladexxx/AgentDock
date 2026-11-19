@@ -30,7 +30,10 @@ def record(fixture, revision, skill_identity, path, dockerfile, context):
     else:
         cli, cli_version = "cli-anything-sand3d", "0.1.0"
         source = "https://github.com/Sandflow-ai/sand3d"
-        skill = {"path": "skills/cli-anything-sand3d/SKILL.md", "sha256": skill_identity}
+        skill = {
+            "path": "fixtures/sand3d/agent-harness/cli_anything/sand3d/skills/SKILL.md",
+            "sha256": skill_identity,
+        }
 
     receipt = {
         "schemaVersion": SCHEMA,

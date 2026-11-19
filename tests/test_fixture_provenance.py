@@ -8,13 +8,14 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+BUILDER = ROOT / "skills" / "agentdock-builder"
 IMAGE = "sha256:" + "a" * 64
 
 
 class FixtureProvenanceTests(unittest.TestCase):
     def run_fixture(self, fixture, directory, *args):
         return subprocess.run(
-            ["bash", str(ROOT / "fixtures" / fixture / "run.sh"), IMAGE, *args, str(directory)],
+            ["bash", str(BUILDER / "fixtures" / fixture / "run.sh"), IMAGE, *args, str(directory)],
             text=True, capture_output=True,
         )
 
@@ -25,6 +26,12 @@ class FixtureProvenanceTests(unittest.TestCase):
                     result = self.run_fixture(fixture, Path(temp) / fixture)
                     self.assertEqual(result.returncode, 2, result.stderr)
                     self.assertIn("BUILD_RECEIPT", result.stderr)
+
+    def test_sand3d_bundle_skill_matches_the_direct_install_skill(self):
+        direct = ROOT / "skills" / "cli-anything-sand3d" / "SKILL.md"
+        bundled = (BUILDER / "fixtures" / "sand3d" / "agent-harness" / "cli_anything"
+                   / "sand3d" / "skills" / "SKILL.md")
+        self.assertEqual(direct.read_bytes(), bundled.read_bytes())
 
     def test_receipt_for_another_image_cannot_verify_the_requested_image(self):
         with tempfile.TemporaryDirectory() as temp:

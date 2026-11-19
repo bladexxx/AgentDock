@@ -2,14 +2,15 @@
 set -euo pipefail
 
 if [[ $# != 3 || ! "$1" =~ ^sha256:[a-f0-9]{64}$ ]]; then
-    echo "Usage: bash fixtures/sand3d/run.sh IMAGE_ID BUILD_RECEIPT NEW_EVIDENCE_DIRECTORY" >&2
+    echo "Usage: bash BUILDER_SKILL_DIR/fixtures/sand3d/run.sh IMAGE_ID BUILD_RECEIPT NEW_EVIDENCE_DIRECTORY" >&2
     exit 2
 fi
 
-repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
-verifier="$repo_dir/verify-sand3d-glb.py"
-source "$repo_dir/fixtures/docker-environment.sh"
-package=$(python3 "$repo_dir/fixtures/build-receipt.py" check sand3d "$1" "$2" "$verifier")
+fixture_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+skill_dir=$(cd -- "$fixture_dir/../.." && pwd)
+verifier="$skill_dir/scripts/verify-sand3d-glb.py"
+source "$skill_dir/scripts/docker-environment.sh"
+package=$(python3 "$skill_dir/scripts/build-receipt.py" check sand3d "$1" "$2" "$verifier")
 mkdir -- "$3"
 printf '%s\n' "$package" > "$3/package.json"
 

@@ -11,7 +11,7 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERIFIER = ROOT / "verify-sand3d-glb.py"
+VERIFIER = ROOT / "skills" / "agentdock-builder" / "scripts" / "verify-sand3d-glb.py"
 MEASUREMENT = ROOT / "docs/v0.1-measurement"
 
 

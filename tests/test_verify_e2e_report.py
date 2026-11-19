@@ -8,7 +8,8 @@ import tempfile
 import unittest
 
 
-VERIFIER = Path(__file__).resolve().parents[1] / "verify-e2e-report.py"
+VERIFIER = (Path(__file__).resolve().parents[1] / "skills" / "agentdock-builder" / "scripts"
+            / "verify-e2e-report.py")
 
 
 class E2EReportTests(unittest.TestCase):
